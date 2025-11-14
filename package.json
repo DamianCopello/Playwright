@@ -1,0 +1,14 @@
+{
+  "name": "documents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Recording 25_1_2023 at 14_06_13.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.5.2"
+  }
+}
