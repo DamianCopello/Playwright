@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Playwright browsers & artifacts
+.playwright/
+playwright-report/
+test-results/
+traces/
+trace/
+screenshots/
+videos/
+artifacts/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+out/
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Misc
+.cache/
