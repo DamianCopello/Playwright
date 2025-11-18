@@ -3,7 +3,14 @@ import { SandboxPage } from './Pages/SandboxPage';
 
 let url = "https://thefreerangetester.github.io/sandbox-automation-testing/";
 
+
 test.describe('Automation Sandbox', () => {
+
+    let sandbox: SandboxPage;
+
+    test.beforeEach(async ({ page }) => {          // <-- inicialización por test
+        sandbox = new SandboxPage(page);
+    });
 
     test('Validate I can click on button w/dynamic ID', async ({ page }) => {
 
@@ -11,11 +18,12 @@ test.describe('Automation Sandbox', () => {
 
         await test.step('Given that I navigate to Automation Sandbox', async () => {
             await page.goto(url);
-        })
+        });
+
         await test.step('A message appears when I click on the button', async () => {
-            await page.getByRole('button', { name: 'Hacé click para generar un ID' }).click();
-            await expect(page.getByText('OMG, aparezco después de 3'), 'Message does not appear').toBeVisible();
-        })
+            await sandbox.clickDynamicButton();
+            await expect(sandbox.OMGMessage, 'Message does not appear').toBeVisible();
+        });
     });
 
     test('Validate I can fill a text field', async ({ page }) => {
@@ -26,16 +34,15 @@ test.describe('Automation Sandbox', () => {
             await page.goto(url);
         })
         await test.step('I can fill the text field', async () => {
-            await expect(page.getByPlaceholder('Ingresá texto'), 'Field is not editable').toBeEditable();
-            await page.getByPlaceholder('Ingresá texto').fill('Hola Mundo');
-            await expect(page.getByPlaceholder('Ingresá texto'), 'Input text is not visible').toHaveValue('Hola Mundo');
+            await expect(sandbox.textField, 'Field is not editable').toBeEditable();
+            await sandbox.textField.fill('Hola Mundo');
+            await expect(sandbox.textField, 'Input text is not visible').toHaveValue('Hola Mundo');
         })
     });
 
     test('Validate I can select/Unselect options from a Checkbox', async ({ page }) => {
 
         test.info().annotations.push({ type: 'User Story 001', description: 'Requirement N003' });
-        const sandbox = new SandboxPage(page);
 
         await test.step('Given that I navigate to Automation Sandbox', async () => {
             await page.goto(url);
@@ -61,8 +68,8 @@ test.describe('Automation Sandbox', () => {
             await page.goto(url);
         })
         await test.step('I can select a Radionbutton', async () => {
-            await page.getByRole('radio', { name: 'Si' }).check();
-            await expect(page.getByRole('radio', { name: 'Si' }), 'Si option is not selected').toBeChecked();
+            await sandbox.radioButtonYes.check();
+            await expect(sandbox.radioButtonYes, 'Si option is not selected').toBeChecked();
         })
     });
 
@@ -74,8 +81,8 @@ test.describe('Automation Sandbox', () => {
             await page.goto(url);
         })
         await test.step('I can select a sport', async () => {
-            await page.getByLabel('Dropdown').selectOption('Fútbol');
-            await expect(page.getByLabel('Dropdown'), 'Fútbol is not selected').toHaveValue('Fútbol');
+            await sandbox.dropdownValue.selectOption('Fútbol');
+            await expect(sandbox.dropdownValue, 'Fútbol is not selected').toHaveValue('Fútbol');
         })
     });
 
@@ -87,7 +94,7 @@ test.describe('Automation Sandbox', () => {
             await page.goto(url);
         })
         await test.step('I can pick a day of the week', async () => {
-            await page.getByRole('button', { name: 'Día de la semana' }).click();
+            await sandbox.diaDeLaSemana.click();
             await page.getByRole('link', { name: 'Miércoles' },).click();
         })
     });
