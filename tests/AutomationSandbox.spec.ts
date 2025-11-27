@@ -1,4 +1,4 @@
-import { test, Browser, Page, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { SandboxPage } from './Pages/SandboxPage';
 
 let url = "https://thefreerangetester.github.io/sandbox-automation-testing/";
@@ -110,7 +110,7 @@ test.describe('Automation Sandbox', () => {
             const deportes = ['Fútbol', 'Tennis', 'Basketball']
             //Iterate over the array to validate each option is present in the dropdown
             for (let opcion of deportes) {
-                const element = page.getByRole('option', { name: opcion });
+                const element = sandbox.deporteOption;
                 if (element) {
                     console.log(`'${opcion}' is present.`);
                 } else {
@@ -161,7 +161,7 @@ test.describe('Automation Sandbox', () => {
         })
     })
 
-    test.skip('Validate that all checkbox values are correct', async ({ page }) => {
+    test('Validate that all checkbox values are correct', async ({ page }) => {
         //This test is skipped with an annotation. Other annotations are test.only and test.fixme
 
         test.info().annotations.push({ type: 'User Story 001', description: 'Requirement N010' });
@@ -171,15 +171,15 @@ test.describe('Automation Sandbox', () => {
         })
         await test.step('I can validate that all checkbox values are correct', async () => {
             //Soft assertions to validate all checkbox options are present
-            await expect.soft(page.getByText('Pizza 🍕'), 'Pizza 🍕 not found').toBeVisible();
-            await expect.soft(page.getByText('Hamburguesa 🍔'), 'Hamburguesa 🍔 not found').toBeVisible();
-            await expect.soft(page.getByText('Pasta 🍝'), 'Pasta 🍝 not found').toBeVisible();
-            await expect.soft(page.getByText('Helado 🍧'), 'Helado 🍧 not found').toBeVisible();
-            await expect.soft(page.getByText('Torta 🍰'), 'Torta 🍰 not found').toBeVisible();
+            await expect.soft(sandbox.pizzaCheckbox, 'Pizza 🍕 not found').toBeVisible();
+            await expect.soft(sandbox.hamburgCheckbox, 'Hamburguesa 🍔 not found').toBeVisible();
+            await expect.soft(sandbox.pastaCheckbox, 'Pasta 🍝 not found').toBeVisible();
+            await expect.soft(sandbox.heladoCheckbox, 'Helado 🍧 not found').toBeVisible();
+            await expect.soft(sandbox.tortaCheckbox, 'Torta 🍰 not found').toBeVisible();
         })
     })
 
-    test('Validate that pop contains expected element', async ({ page }) => {
+    test('Validate that popup contains expected element', async ({ page }) => {
 
         test.info().annotations.push({ type: 'User Story 001', description: 'Requirement N011' });
 
@@ -187,14 +187,14 @@ test.describe('Automation Sandbox', () => {
             await page.goto(url);
         })
         await test.step('When I click on the popup button', async () => {
-            await page.getByRole('button', { name: 'Mostrar popup' }).click();
+            await sandbox.popupButton.click();
         })
         await test.step('I can validate the element within it', async () => {
-            await expect(page.getByText('¿Viste? ¡Apareció un Pop-up!')).toHaveText('¿Viste? ¡Apareció un Pop-up!');
+            await expect(sandbox.popupMessage).toHaveText('¿Viste? ¡Apareció un Pop-up!');
         })
         await test.step('I can close the popup', async () => {
-            await page.getByRole('button', { name: 'Cerrar' }).click();
-            await expect(page.getByRole('button', { name: 'Cerrar' }), 'Popup was not closed').not.toBeVisible();
+            await sandbox.popupClose.click();
+            await expect(sandbox.popupClose, 'Popup was not closed').not.toBeVisible();
 
         })
 
